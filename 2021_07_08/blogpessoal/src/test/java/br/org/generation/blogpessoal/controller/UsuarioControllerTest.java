@@ -31,11 +31,12 @@ public class UsuarioControllerTest {
 	@Disabled
 	@BeforeAll
 	public void start() {
-		usuario = new Usuario(0L, "Maria", "maria@gmail.com", "44451198");
-		usuarioupd = new Usuario(1L,"Maria da Silva", "mariasilva@gmail.com", "995467892");
+		usuario = new Usuario(0L, "João", "joao@gmail.com", "44451198");
+		usuarioupd = new Usuario(15L,"João da Silva", "joao@gmail.com", "44451198");
 	}
 
 	//Cadastrar usuário
+	@Disabled
 	@Test
 	 @DisplayName("😃 Cadastrar Usuário!")
 	public void deveRealizarPostUsuarios() {
@@ -53,10 +54,10 @@ public class UsuarioControllerTest {
 	}
 	
 	@Disabled
-	// Listar usuarios
+	// Mostrar/ Listar usuarios
 	@Test
 	public void deveMostrarTodosUsuarios() {
-		ResponseEntity<String> resposta = testRestTemplate.exchange("/usuarios/", HttpMethod.GET, null, String.class);
+		ResponseEntity<String> resposta = testRestTemplate.withBasicAuth("joao@gmail.com", "44451198").exchange("/usuarios/mostrar", HttpMethod.GET, null, String.class);
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}
 	
@@ -66,12 +67,12 @@ public class UsuarioControllerTest {
 
 		HttpEntity<Usuario> request = new HttpEntity<Usuario>(usuarioupd);
 
-		ResponseEntity<Usuario> resposta = testRestTemplate.exchange("/usuarios/alterar", HttpMethod.PUT, request, Usuario.class);
+		ResponseEntity<Usuario> resposta = testRestTemplate.withBasicAuth("joao@gmail.com", "44451198").exchange("/usuarios/alterar", HttpMethod.PUT, request, Usuario.class);
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 		
 	}
 	
-	@Disabled
+
 	@Test
 	@DisplayName("😱")
 	public void deveRealizarDeleteUsuarios() {
@@ -81,7 +82,7 @@ public class UsuarioControllerTest {
 		 * Caso contrário, o teste irá falhar!
 		 * 
 		 * */
-		ResponseEntity<String> resposta = testRestTemplate.exchange("/usuarios/3", HttpMethod.DELETE, null, String.class);
+		ResponseEntity<String> resposta = testRestTemplate.withBasicAuth("maria@gmail.com", "44451198").exchange("/usuarios/14", HttpMethod.DELETE, null, String.class);
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 		
 	}

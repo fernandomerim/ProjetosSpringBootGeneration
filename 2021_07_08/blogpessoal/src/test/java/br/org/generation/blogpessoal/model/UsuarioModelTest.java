@@ -44,6 +44,7 @@ public class UsuarioModelTest {
         
         //O Teste só passará se a Lista de Erros estiver vazia!
         assertTrue(violations.isEmpty());
+       
                 
     }
 
